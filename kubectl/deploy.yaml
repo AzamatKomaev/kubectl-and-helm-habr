@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app
+  namespace: kubectl-ns
+  labels:
+    app-label: spring-app-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-label: spring-app-label
+  template:
+    metadata:
+      labels:
+        app-label: spring-app-label
+    spec:
+      containers:
+      - name: spring-app-app
+        image: cr.yandex/$REGISTRY_ID/spring-app:$VERSION
+        ports:
+        - name: http
+          containerPort: 8080
+        env:
+        # --- variables from Yandex Lockbox
+        - name: JDBC_URL
+          valueFrom:
+            secretKeyRef:
+              name: spring-app-lockbox-secret
+              key: JDBC_URL
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: spring-app-lockbox-secret
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: spring-app-lockbox-secret
+              key: DB_PASSWORD

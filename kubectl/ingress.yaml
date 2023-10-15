@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: spring-app-ingress
+  namespace: kubectl-ns
+spec:
+  tls:
+    - hosts:
+      - spring-app.dev.example.com
+      secretName: spring-app-certificate-secret
+  ingressClassName: spring-app-class-resource
+  rules:
+    - host: spring-app.dev.example.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: spring-app
+              port:
+                name: http
