@@ -19,6 +19,11 @@ clusterip:
   port: 80
   targetPort: http
 
+deployment:
+  replicaCount: 1
+  image: ""
+  containerPort: 8080
+
 # Default values for helm-chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
