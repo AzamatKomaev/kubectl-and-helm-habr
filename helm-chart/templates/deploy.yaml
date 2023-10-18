@@ -20,6 +20,8 @@ spec:
         ports:
         - name: {{ .Values.clusterip.targetPort }}
           containerPort: {{ .Values.deployment.containerPort }}
+        resources:
+          {{- toYaml .Values.deployment.resources | nindent 10 }}
         {{- if .Values.lockboxSecretStore.enabled }}
         env:
         {{- range .Values.lockboxSecretStore.externalSecret.data }}
