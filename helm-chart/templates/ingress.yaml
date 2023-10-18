@@ -1,3 +1,4 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -5,17 +6,18 @@ metadata:
 spec:
   tls:
     - hosts:
-      - spring-app.dev.example.com
+      - {{ .Values.ingress.host }}
       secretName: {{ .Release.Name }}-certificate-secret
   ingressClassName: {{ .Release.Name }}-class-resource
   rules:
-    - host: spring-app.dev.example.com
+    - host: {{ .Values.ingress.host }}
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: spring-app
+              name: {{ .Release.Name }}
               port:
-                name: http
+                name: {{ .Values.clusterip.port }}
+{{- end }}
