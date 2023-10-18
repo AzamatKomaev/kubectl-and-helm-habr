@@ -1,5 +1,14 @@
 lockboxSecretStore:
   enabled: true
+  externalSecret:
+    secretId: ""
+    data:
+    - secretKey: JDBC_URL
+      property: JDBC_URL
+    - secretKey: DB_USERNAME
+      property: DB_USERNAME
+    - secretKey: DB_PASSWORD
+      property: DB_PASSWORD
 
 certificateSecretStore:
   enabled: true
